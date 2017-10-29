@@ -1,0 +1,9 @@
+{% if tweets|length<1 %}
+<h1>Couldn't Find Tweets! Go back to <a href='http://localhost:5000/index'>the form</a></h1>
+{% else %}
+	{% for r in tweets %}
+	<p>{{r}}</p>
+	<a href='/twitter-info/{{username}}'>{{username}}</a>
+	{% endfor %}
+{% endif %}
+
