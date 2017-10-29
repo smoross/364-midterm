@@ -1,5 +1,4 @@
 from flask import Flask, request, render_template, make_response
-import json
 import requests
 import os
 
@@ -9,8 +8,6 @@ from wtforms.validators import Required
 
 import twitter
 import tweepy
-import tweepy
-from textblob import TextBlob
 from tweepy import OAuthHandler
 from tweepy import API
 from tweepy import Cursor
@@ -30,16 +27,16 @@ auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth)
 
 class TwitterForm(FlaskForm):
-    keyword = StringField('Insert a keyword', validators=[ Required() ])
+    keyword = StringField('Insert a keyword ', validators=[ Required() ])
     submit = SubmitField('Submit')
 
 @app.route('/')
 def hello_user():
-	response = make_response("Hello Tweeter! <img src='/static/twitter-2012-positive-logo-916EDF1309-seeklogo.com.png'/>")
+	response = make_response("Hello Tweeter! <img src='/static/twitter-2012-positive-logo-916EDF1309-seeklogo.com.png' width='150' height:'50'/>")
 	response.set_cookie('cookie_name',value='values')
 	return response
 
-@app.route('/index')
+@app.route('/form')
 def home_route():
 	Form = TwitterForm()
 	return render_template('twitter-form.html', form=Form)
@@ -49,8 +46,7 @@ def result():
 	form = TwitterForm(request.form)
 	if request.method == 'POST':
 		keyword = form.keyword.data
-		print (keyword)
-		x = tweepy.Cursor(api.search, q=keyword, result_type="recent", include_entities=True, lang="en", show_user=True).items(10)
+		x = tweepy.Cursor(api.search, q=keyword, result_type="recent", include_entities=True, lang="en", show_user=True).items(20)
 		accum = []
 		for tweet in x:
 			accum.append(tweet.text)

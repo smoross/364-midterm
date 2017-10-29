@@ -1,5 +1,7 @@
 {% block content %}
   <h1>Twitter Form</h1>
+  <img src='/static/twitter-2012-positive-logo-916EDF1309-seeklogo.com.png' 
+  width='150' height:'50'/>
   <form method="POST" action="http://localhost:5000/result">
       {{ form.hidden_tag() }}
       {% for message in get_flashed_messages() %}
